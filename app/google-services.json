@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "67253560123",
+    "firebase_url": "https://petsitter-51930.firebaseio.com",
+    "project_id": "petsitter-51930",
+    "storage_bucket": "petsitter-51930.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:67253560123:android:65df6c463f42107f",
+        "android_client_info": {
+          "package_name": "com.batech.app.petsitter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "67253560123-0dtiufir8m87lafesrht8vbud2h14aca.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.batech.app.petsitter",
+            "certificate_hash": "02a3f15e3d5897476944659a3af2ab597bedd88b"
+          }
+        },
+        {
+          "client_id": "67253560123-e5di690gkposrsfhqfkv064pde5ssiuv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkDVuOxgB9jkdDsT-JGJnrLIe9Z2_m-fA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "67253560123-e5di690gkposrsfhqfkv064pde5ssiuv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

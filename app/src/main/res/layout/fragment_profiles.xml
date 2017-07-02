@@ -1,0 +1,129 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerVertical="true"
+    tools:context="com.batech.app.petsitter.fragment.ProfileFragment">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        tools:context="com.example.edittextexample.MainActivity">
+        <ImageView
+            android:id="@+id/img_profile"
+            android:layout_width="@dimen/profile_width"
+            android:layout_height="@dimen/profile_height"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:src="@android:drawable/sym_def_app_icon"/>
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/img_profile"
+            android:layout_alignStart="@+id/img_profile"
+            android:layout_below="@+id/img_profile"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="100dp"
+            android:ems="15"
+            android:hint="@string/hint_name"
+            android:inputType="textPersonName"/>
+
+        <EditText
+            android:id="@+id/surname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/name"
+            android:layout_alignStart="@+id/name"
+            android:layout_below="@+id/name"
+            android:ems="15"
+            android:hint="@string/hint_surname"
+            android:inputType="textPersonName"
+            android:selectAllOnFocus="true" />
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/surname"
+            android:layout_alignStart="@+id/surname"
+            android:layout_below="@+id/surname"
+            android:ems="15"
+            android:hint="@string/hint_username"
+            android:inputType="textPersonName"
+            android:selectAllOnFocus="true" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/username"
+            android:layout_alignStart="@+id/username"
+            android:layout_below="@+id/username"
+            android:layout_marginTop="5dp"
+            android:ems="15"
+            android:hint="Password 0-9"
+            android:inputType="numberPassword" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/password"
+            android:layout_alignStart="@+id/password"
+            android:layout_below="@+id/password"
+            android:layout_marginTop="12dp"
+            android:ems="15"
+            android:hint="E-Mail"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/email"
+            android:layout_alignStart="@+id/email"
+            android:layout_below="@+id/email"
+            android:layout_marginTop="5dp"
+            android:ems="15"
+            android:hint="Birthday"
+            android:inputType="date" />
+
+        <EditText
+            android:id="@+id/contactnumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/birthday"
+            android:layout_alignStart="@+id/birthday"
+            android:layout_below="@+id/birthday"
+            android:layout_marginTop="5dp"
+            android:ems="15"
+            android:hint="Contact Number"
+            android:inputType="phone" />
+
+        <Button
+            android:id="@+id/saveBtn"
+            style="@android:style/Widget.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contactnumber"
+            android:layout_marginTop="10dp"
+            android:text="Save"
+            android:textSize="15sp"
+            android:textStyle="normal|bold"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</FrameLayout>

@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Bakıcım</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+
+    <!-- Navigation Drawer menu labels -->
+    <string name="nav_home">Ana Sayfa</string>
+    <string name="nav_profile">Profilim</string>
+    <string name="nav_messages">Mesajlar</string>
+    <string name="nav_notifications">Bildirimler</string>
+    <string name="nav_settings">Ayarlar</string>
+    <string name="nav_about_us">Hakkımızda</string>
+
+    <!-- Toolbar titles when navigation menu item is selected -->
+    <string-array name="nav_item_activity_titles">
+        <item>Ana Sayfa</item>
+        <item>Profilim</item>
+        <item>Mesajlar</item>
+        <item>Bildirimler</item>
+        <item>Ayarlar</item>
+    </string-array>
+
+    <string name="activity_title_about_us">Hakkımızda</string>
+    <string name="activity_title_privacy_policy">Privacy Policy</string>
+    <string name="action_clear_all">Clear All</string>
+    <string name="action_logout">Çıkış</string>
+    <string name="action_mark_all_read">Mark All as Read</string>
+    <string name="privacy_policy">Privacy Policy</string>
+
+    <string name="hint_name">İsim Soyad</string>
+    <string name="btn_login">Giriş</string>
+    <string name="btn_register">Üye Ol</string>
+    <string name="btn_link_to_register">Üye değil misin? Hemen üye ol.</string>
+    <string name="btn_link_to_login">Üye misin? Giriş yap.</string>
+    <string name="welcome">Hoşgeldiniz</string>
+    <string name="btn_logout">Çıkış</string>
+    <string name="name">İsim Soyad</string>
+    <string name="hint_user_id">Kullanıcı Id</string>
+    <string name="get_custom_token">Get Token</string>
+    <string name="sign_in">Giriş</string>
+    <string name="create_account">Hesap Aç</string>
+    <string name="sign_out">Çıkış</string>
+    <string name="verify_email">Verify Email</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="loading">Yükleniyor…</string>
+    <string name="custom_token">Custom Token</string>
+    <string name="signed_in">Hoşgeldiniz</string>
+    <string name="welcome_msg">Hoşgeldiniz</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="token_null">Token: null</string>
+    <string name="hint_email">E-Posta</string>
+    <string name="hint_password">Şifre</string>
+    <string name="desc_firebase_lockup">Firebase logo and name</string>
+    <string name="auth_failed">Giriş Başarısız</string>
+    <string name="auth_activate">Lütfen E-Posta adresinize gönderilen linke tıklayınız.</string>
+    <string name="emailpassword_title_text">E-Posta ve Şifre</string>
+    <string name="mytextdetail_text">Bakıcım Sunar</string>
+
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+
+</resources>
