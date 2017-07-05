@@ -275,21 +275,22 @@ public class MainActivity extends BaseActivity {
                     case R.id.nav_profile:
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_PROFILE;
-                        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-                        return true;
-//                        break;
+                        break;
                     case R.id.nav_messages:
                         navItemIndex = 2;
                         CURRENT_TAG = TAG_MESSAGES;
                         break;
                     case R.id.nav_notifications:
                         navItemIndex = 3;
-                        CURRENT_TAG = TAG_NOTIFICATIONS;
-                        break;
+                      startActivity(new Intent(MainActivity.this, NewPostActivity.class));
+                      return true;
+//                    CURRENT_TAG = TAG_NOTIFICATIONS;
+  //                    break;
+
                     case R.id.nav_settings:
                         navItemIndex = 4;
                         CURRENT_TAG = TAG_SETTINGS;
-                        startActivity(new Intent(MainActivity.this, NewPostActivity.class));
+                        startActivity(new Intent(MainActivity.this, SettingActivity.class));
                         return true;
 //                        break;
                     case R.id.nav_about_us:
