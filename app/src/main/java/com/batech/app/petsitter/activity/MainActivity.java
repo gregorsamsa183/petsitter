@@ -54,7 +54,7 @@ public class MainActivity extends BaseActivity {
         super.onPostCreate(savedInstanceState);
     }
 
-    private static final String urlProfileImg = "https://pbs.twimg.com/profile_images/618461780042489856/KrAG1g6_.jpg";
+    private String urlProfileImg;
 
     // index to identify current nav menu item
     public static int navItemIndex = 0;
@@ -85,6 +85,7 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -155,7 +156,7 @@ public class MainActivity extends BaseActivity {
                 .into(imgNavHeaderBg);
 
         // Loading profile image
-        Glide.with(this).load(urlProfileImg)
+        Glide.with(this).load(mAuth.getCurrentUser().getPhotoUrl())
                 .crossFade()
                 .thumbnail(0.5f)
                 .bitmapTransform(new CircleTransform(this))

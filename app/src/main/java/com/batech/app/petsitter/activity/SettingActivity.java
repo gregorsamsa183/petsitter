@@ -41,8 +41,8 @@ public class SettingActivity extends BaseActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ProfileFragment(), "Account");
-        adapter.addFragment(new ProfileFragment(), "Privacy");
-        adapter.addFragment(new ProfileFragment(), "Communication");
+        adapter.addFragment(new OneFragment(), "Privacy");
+        adapter.addFragment(new OneFragment(), "Communication");
         viewPager.setAdapter(adapter);
     }
 
