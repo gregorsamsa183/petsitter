@@ -2,6 +2,8 @@ package com.batech.app.petsitter.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,9 +54,9 @@ public class ProfileFragment extends Fragment {
     private EditText p_bday;
     private EditText p_contactNumber;
 
-    private ProgressDialog dialog;
-
     private DatabaseReference mDatabase;
+
+    private ProgressBar mProgressBar;
 
     FirebaseUser user;
     private String user_id;
@@ -110,7 +113,8 @@ public class ProfileFragment extends Fragment {
         p_bday = (EditText) myFragmentView.findViewById(R.id.birthday);
         p_contactNumber = (EditText) myFragmentView.findViewById(R.id.contactnumber);
 
-        dialog = ProgressDialog.show(getActivity(), "Loading...", "Please wait...", true);
+        mProgressBar = (ProgressBar) myFragmentView.findViewById(R.id.progressBar);
+        mProgressBar.getIndeterminateDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.MULTIPLY);
 
         mDatabase.child("users").child(user_id).addValueEventListener(new ValueEventListener() {
             @Override
@@ -119,7 +123,7 @@ public class ProfileFragment extends Fragment {
                 p_name.setText(profile.getName());
                 p_surname.setText(profile.getSurname());
                 p_username.setText(profile.getUsername());
-                dialog.hide();
+                mProgressBar.setVisibility(ProgressBar.INVISIBLE);
             }
 
             @Override
