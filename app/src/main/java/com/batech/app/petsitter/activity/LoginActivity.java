@@ -3,9 +3,11 @@ package com.batech.app.petsitter.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +15,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.batech.app.petsitter.R;
+import com.batech.app.petsitter.model.Profiles;
+import com.batech.app.petsitter.model.User;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -27,9 +31,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
-		View.OnClickListener{
+import java.util.HashMap;
+import java.util.Map;
+
+public class LoginActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener,
+		View.OnClickListener {
 	private static final String TAG = LoginActivity.class.getSimpleName();
 	private Button btnLinkToRegisterScreen;
 	private Button btnSignIn;
@@ -38,6 +47,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 	private ProgressDialog pDialog;
 	private FirebaseAuth mAuth;
 	private FirebaseAuth.AuthStateListener mAuthListener;
+	private DatabaseReference mDatabase;
+	private GoogleSignInAccount acct;
+
 	private ProgressDialog mAuthProgressDialog;
 
 	private static final int RC_SIGN_IN = 9001;
@@ -88,42 +100,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 		btnSignIn = (Button) findViewById(R.id.btnLogin);
 		btnLinkToRegisterScreen = (Button) findViewById(R.id.btnLinkToRegisterScreen);
 
-		// Progress dialog
-		pDialog = new ProgressDialog(this);
-		pDialog.setCancelable(true);
+		btnLinkToRegisterScreen.setOnClickListener(this);
 
-		btnLinkToRegisterScreen.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
-				startActivity(i);
-				finish();
-			}
-		});
-
-		btnSignIn.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				mAuthProgressDialog = new ProgressDialog(LoginActivity.this);
-				mAuthProgressDialog.setTitle("Loading");
-				mAuthProgressDialog.setMessage("Authenticating with Firebase...");
-				mAuthProgressDialog.setCancelable(false);
-				mAuthProgressDialog.show();
-				String email = inputEmail.getText().toString().trim();
-				String password = inputPassword.getText().toString().trim();
-
-				// Check for empty data in the form
-				if (!email.isEmpty() && !password.isEmpty()) {
-					// login user
-					signIn(email, password);
-				} else {
-					// Prompt user to enter credentials
-					Toast.makeText(getApplicationContext(),
-							"Please enter the credentials!", Toast.LENGTH_LONG)
-							.show();
-				}
-			}
-
-		});
+		btnSignIn.setOnClickListener(this);
 	}
 
 	private void signIn(final String email, final String password) {
@@ -140,21 +119,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 							Log.w(TAG, "signInWithEmail:failed", task.getException());
 							Toast.makeText(LoginActivity.this, R.string.auth_failed,
 									Toast.LENGTH_SHORT).show();
-						}
-						else {
+						} else {
 							// Staring MainActivity
 
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            if(user.isEmailVerified()){
-                                Intent i = new Intent(getApplicationContext(), com.batech.app.petsitter.activity.MainActivity.class);
-                                startActivity(i);
-                                finish();
-                            }
-                            else {
-                                Toast.makeText(LoginActivity.this, R.string.auth_activate,
-                                        Toast.LENGTH_SHORT).show();
+							FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+							if (user.isEmailVerified()) {
+								Intent i = new Intent(getApplicationContext(), com.batech.app.petsitter.activity.MainActivity.class);
+								startActivity(i);
+								finish();
+							} else {
+								Toast.makeText(LoginActivity.this, R.string.auth_activate,
+										Toast.LENGTH_SHORT).show();
 
-                            }
+							}
 
 						}
 						mAuthProgressDialog.hide();
@@ -171,11 +148,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 		if (pDialog.isShowing())
 			pDialog.dismiss();
 	}
+
 	@Override
 	public void onStart() {
 		super.onStart();
 		mAuth.addAuthStateListener(mAuthListener);
 	}
+
 	@Override
 	public void onStop() {
 		super.onStop();
@@ -191,6 +170,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 				Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
 				startActivityForResult(signInIntent, RC_SIGN_IN);
 				break;
+			case R.id.btnLinkToRegisterScreen:
+				Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+				startActivity(i);
+				finish();
+			case R.id.btnLogin:
+				if(validateForm()){
+					String email = inputEmail.getText().toString().trim();
+					String password = inputPassword.getText().toString();
+					signIn(email, password);
+				}
 			default:
 				return;
 		}
@@ -205,15 +194,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 			GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
 			if (result.isSuccess()) {
 				// Google Sign In was successful, authenticate with Firebase
-				GoogleSignInAccount account = result.getSignInAccount();
-				firebaseAuthWithGoogle(account);
+				acct = result.getSignInAccount();
+				firebaseAuthWithGoogle();
 			} else {
 				// Google Sign In failed
 				Log.e(TAG, "Google Sign In failed.");
 			}
 		}
 	}
-	private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+
+	private void firebaseAuthWithGoogle() {
 		Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 		AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
 		mAuth.signInWithCredential(credential)
@@ -230,6 +220,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 							Toast.makeText(LoginActivity.this, "Authentication failed.",
 									Toast.LENGTH_SHORT).show();
 						} else {
+							mDatabase = FirebaseDatabase.getInstance().getReference();
+							createUserForFirebase();
 							startActivity(new Intent(LoginActivity.this, MainActivity.class));
 							finish();
 						}
@@ -242,5 +234,51 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 		Log.d(TAG, "onConnectionFailed:" + connectionResult);
 		Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+	}
+
+	private boolean validateForm() {
+		boolean valid = true;
+
+		String email = inputEmail.getText().toString().trim();
+
+		if (TextUtils.isEmpty(email)) {
+			inputEmail.setError("Required.");
+			valid = false;
+		} else {
+			inputEmail.setError(null);
+		}
+
+		String password = inputPassword.getText().toString();
+		if (TextUtils.isEmpty(password)) {
+			inputPassword.setError("Required.");
+			valid = false;
+		} else {
+			inputPassword.setError(null);
+		}
+
+		return valid;
+	}
+
+	public void createUserForFirebase(){
+
+		String userid = getUid();
+		String email = acct.getEmail();
+		String displayName = acct.getDisplayName();
+		String familyName = acct.getFamilyName();
+		String givenName = acct.getGivenName();
+		Uri photoUrl = acct.getPhotoUrl();
+
+		User user = new User(email, email, givenName, familyName, displayName, photoUrl);
+		//		String username, String email, String name, String surname, String fullname, Uri uri
+
+		Map<String, Object> userValues = user.toMap();
+
+		Map<String, Object> childUpdates = new HashMap<>();
+		//            childUpdates.put("/posts/" + key, postValues);
+		childUpdates.put("/users/" + userid, userValues);
+
+		mDatabase.updateChildren(childUpdates);
+
+
 	}
 }

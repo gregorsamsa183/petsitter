@@ -11,10 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.batech.app.petsitter.R;
+import com.batech.app.petsitter.other.CircleTransform;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +32,8 @@ import com.batech.app.petsitter.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostDetailActivity extends BaseActivity implements View.OnClickListener {
 
@@ -41,17 +48,20 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private CommentAdapter mAdapter;
 
     private TextView mAuthorView;
+    private ImageView mImageView;
     private TextView mTitleView;
     private TextView mBodyView;
     private EditText mCommentField;
     private Button mCommentButton;
     private RecyclerView mCommentsRecycler;
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Get post key from intent
         mPostKey = getIntent().getStringExtra(EXTRA_POST_KEY);
@@ -67,6 +77,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
         // Initialize Views
         mAuthorView = (TextView) findViewById(R.id.post_author);
+        mImageView = (ImageView) findViewById(R.id.post_author_photo);
         mTitleView = (TextView) findViewById(R.id.post_title);
         mBodyView = (TextView) findViewById(R.id.post_body);
         mCommentField = (EditText) findViewById(R.id.field_comment_text);
@@ -84,6 +95,15 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
         // Add value event listener to the post
         // [START post_value_event_listener]
+
+        Glide.with(this).load("https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAm-AAAAJDg0M2YwYWI3LTM5YWItNGEwMi1hNTg1LTZkNzFkM2U5ZWE0NA.jpg")
+                .crossFade()
+                .thumbnail(0.5f)
+                .bitmapTransform(new CircleTransform(this))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(mImageView);
+
+
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

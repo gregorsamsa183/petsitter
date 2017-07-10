@@ -8,7 +8,7 @@
 
     <!-- Navigation Drawer menu labels -->
     <string name="nav_home">Home</string>
-    <string name="nav_profile">My Profile</string>
+    <string name="nav_profile">My Posts</string>
     <string name="nav_messages">Messages</string>
     <string name="nav_notifications">Notifications</string>
     <string name="nav_settings">Setting</string>
@@ -30,7 +30,7 @@
     <string name="action_mark_all_read">Mark All as Read</string>
     <string name="privacy_policy">Privacy Policy</string>
 
-    <string name="hint_name">Fullname</string>
+    <string name="hint_name">Name</string>
     <string name="hint_surname">Surname</string>
     <string name="hint_username">Username</string>
     <string name="btn_login">LOGIN</string>
@@ -67,6 +67,8 @@
     <string name="sharedPrefName">com.batech.app.petsitter.name</string>
     <string name="sharedPrefSurname">com.batech.app.petsitter.surname</string>
     <string name="sharedPrefUserame">com.batech.app.petsitter.username</string>
+
+    <string name="required">Required</string>
 
     <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
 

@@ -14,11 +14,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.batech.app.petsitter.R;
 import com.batech.app.petsitter.model.Profiles;
+import com.batech.app.petsitter.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +48,7 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private View myFragmentView;
+    private RelativeLayout p_formLayout;
     private Button savebtn;
     private EditText p_name;
     private EditText p_surname;
@@ -53,6 +56,7 @@ public class ProfileFragment extends Fragment {
     private EditText p_email;
     private EditText p_bday;
     private EditText p_contactNumber;
+
 
     private DatabaseReference mDatabase;
 
@@ -107,6 +111,7 @@ public class ProfileFragment extends Fragment {
         user_id = user.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        p_formLayout = (RelativeLayout) myFragmentView.findViewById(R.id.form_layout);
         p_name = (EditText) myFragmentView.findViewById(R.id.name);
         p_surname = (EditText) myFragmentView.findViewById(R.id.surname);
         p_username = (EditText) myFragmentView.findViewById(R.id.username);
@@ -115,15 +120,16 @@ public class ProfileFragment extends Fragment {
 
         mProgressBar = (ProgressBar) myFragmentView.findViewById(R.id.progressBar);
         mProgressBar.getIndeterminateDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.MULTIPLY);
-
+        p_formLayout.setVisibility(RelativeLayout.INVISIBLE);
         mDatabase.child("users").child(user_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Profiles profile = dataSnapshot.getValue(Profiles.class);
-                p_name.setText(profile.getName());
-                p_surname.setText(profile.getSurname());
-                p_username.setText(profile.getUsername());
+                User user = dataSnapshot.getValue(User.class);
+                p_name.setText(user.getName());
+                p_surname.setText(user.getSurname());
+                p_username.setText(user.getFullname());
                 mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+                p_formLayout.setVisibility(RelativeLayout.VISIBLE);
             }
 
             @Override
