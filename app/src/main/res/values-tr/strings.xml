@@ -8,7 +8,7 @@
 
     <!-- Navigation Drawer menu labels -->
     <string name="nav_home">Ana Sayfa</string>
-    <string name="nav_profile">Profilim</string>
+    <string name="nav_profile">Gönderilerim</string>
     <string name="nav_messages">Mesajlar</string>
     <string name="nav_notifications">Bildirimler</string>
     <string name="nav_settings">Ayarlar</string>
@@ -30,7 +30,9 @@
     <string name="action_mark_all_read">Mark All as Read</string>
     <string name="privacy_policy">Privacy Policy</string>
 
-    <string name="hint_name">İsim Soyad</string>
+    <string name="hint_name">İsim</string>
+    <string name="hint_surname">Soyad</string>
+    <string name="hint_username">Username</string>
     <string name="btn_login">Giriş</string>
     <string name="btn_register">Üye Ol</string>
     <string name="btn_link_to_register">Üye değil misin? Hemen üye ol.</string>
@@ -58,6 +60,8 @@
     <string name="auth_activate">Lütfen E-Posta adresinize gönderilen linke tıklayınız.</string>
     <string name="emailpassword_title_text">E-Posta ve Şifre</string>
     <string name="mytextdetail_text">Bakıcım Sunar</string>
+
+    <string name="required">Zorunlu</string>
 
     <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
 

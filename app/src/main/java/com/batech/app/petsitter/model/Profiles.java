@@ -14,6 +14,7 @@ public class Profiles {
     private int     age;
     private String  name;
     private String  surname;
+    private String  fullname;
     private String  username;
     private String  gender;
     private String  password;
@@ -123,8 +124,12 @@ public class Profiles {
         result.put("name", name);
         result.put("surname", surname);
         result.put("username", username);
-
+        result.put("fullname", getFullname());
         return result;
+    }
+
+    public String getFullname(){
+        return name+" "+surname;
     }
 
 }

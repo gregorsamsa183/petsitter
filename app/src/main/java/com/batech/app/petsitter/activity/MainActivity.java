@@ -29,12 +29,18 @@ import com.batech.app.petsitter.fragment.NotificationsFragment;
 import com.batech.app.petsitter.fragment.MessagesFragment;
 import com.batech.app.petsitter.fragment.ProfileFragment;
 import com.batech.app.petsitter.fragment.SettingsFragment;
+import com.batech.app.petsitter.model.User;
 import com.batech.app.petsitter.other.CircleTransform;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends BaseActivity {
     private NavigationView navigationView;
@@ -48,6 +54,7 @@ public class MainActivity extends BaseActivity {
     // and profile image
     private static final String urlNavHeaderBg = "http://api.androidhive.info/images/nav-menu-header-bg.jpg";
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -88,6 +95,25 @@ public class MainActivity extends BaseActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        final String userId = getUid();
+        mDatabase.child("users").child(userId).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        if(user == null){
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -96,6 +122,7 @@ public class MainActivity extends BaseActivity {
             startActivity(intent);
             finish();
         }
+
 
         mHandler = new Handler();
 
@@ -230,9 +257,9 @@ public class MainActivity extends BaseActivity {
                 return allPostsFragment;
 
             case 1:
-                // profile fragment
-                ProfileFragment profileFragment = new ProfileFragment();
-                return profileFragment;
+                // myPost fragment
+                MyPostsFragment myPostsFragment = new MyPostsFragment();
+                return myPostsFragment;
             case 2:
                 // messages fragement
                 MessagesFragment messagesFragment = new MessagesFragment();
