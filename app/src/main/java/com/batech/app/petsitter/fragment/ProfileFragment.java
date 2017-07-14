@@ -108,6 +108,7 @@ public class ProfileFragment extends Fragment {
 
         myFragmentView = inflater.inflate(R.layout.fragment_profiles, container, false);
         user = FirebaseAuth.getInstance().getCurrentUser();
+
         user_id = user.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -194,6 +195,9 @@ public class ProfileFragment extends Fragment {
     private void updateUI(View view, FirebaseUser user) {
         if (user != null) {
             ((TextView) view.findViewById(R.id.name)).setText(mDatabase.child("users").child(user_id).child("name").getKey());
+            ((TextView) view.findViewById(R.id.surname)).setText(mDatabase.child("users").child(user_id).child("surname").getKey());
+            ((TextView) view.findViewById(R.id.username)).setText(mDatabase.child("users").child(user_id).child("username").getKey());
+            ((TextView) view.findViewById(R.id.email)).setText(mDatabase.child("users").child(user_id).child("email").getKey());
         } else {
             ((TextView) view.findViewById(R.id.name)).setText("Error: update failed.");
         }
@@ -202,7 +206,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        ((TextView) myFragmentView.findViewById(R.id.name)).setText(user.getDisplayName());
     }
     public void updateProfile(String userId, String name, String surname, String username){
             // Create new post at /user-posts/$userid/$postid and at
@@ -212,9 +215,14 @@ public class ProfileFragment extends Fragment {
             Map<String, Object> profileValues = profiles.toMap();
 
             Map<String, Object> childUpdates = new HashMap<>();
-//            childUpdates.put("/posts/" + key, postValues);
-            childUpdates.put("/users/" + userId, profileValues);
 
-            mDatabase.updateChildren(childUpdates);
+//            childUpdates.put("/posts/" + key, postValues);
+//            childUpdates.put("/users/" + userId, profileValues);
+
+            mDatabase.child("users").child(userId).child("name").setValue(name);
+            mDatabase.child("users").child(userId).child("surname").setValue(name);
+            mDatabase.child("users").child(userId).child("username").setValue(username);
+            updateUI(myFragmentView, user);
+//            mDatabase.updateChildren(childUpdates);
     }
 }

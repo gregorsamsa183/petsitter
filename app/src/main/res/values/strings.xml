@@ -10,7 +10,7 @@
     <string name="nav_home">Home</string>
     <string name="nav_profile">My Posts</string>
     <string name="nav_messages">Messages</string>
-    <string name="nav_notifications">Notifications</string>
+    <string name="nav_newpost">New Post</string>
     <string name="nav_settings">Setting</string>
     <string name="nav_about_us">About Us</string>
 
@@ -19,7 +19,7 @@
         <item>Home</item>
         <item>My Profile</item>
         <item>Messages</item>
-        <item>Notifications</item>
+        <item>New Post</item>
         <item>Settings</item>
     </string-array>
 

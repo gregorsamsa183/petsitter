@@ -25,11 +25,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.batech.app.petsitter.model.Comment;
 import com.batech.app.petsitter.model.Post;
 import com.batech.app.petsitter.model.User;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,11 +42,14 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     private static final String TAG = "PostDetailActivity";
 
     public static final String EXTRA_POST_KEY = "post_key";
+    public static final String EXTRA_POST_KEY_2 = "post_key_2";
 
     private DatabaseReference mPostReference;
     private DatabaseReference mCommentsReference;
+    private DatabaseReference mUserReference;
     private ValueEventListener mPostListener;
     private String mPostKey;
+    private String mPostAuthorPhotoUrl;
     private CommentAdapter mAdapter;
 
     private TextView mAuthorView;
@@ -65,8 +70,9 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
         // Get post key from intent
         mPostKey = getIntent().getStringExtra(EXTRA_POST_KEY);
-        if (mPostKey == null) {
-            throw new IllegalArgumentException("Must pass EXTRA_POST_KEY");
+        mPostAuthorPhotoUrl = getIntent().getStringExtra(EXTRA_POST_KEY_2);
+        if (mPostKey == null || mPostAuthorPhotoUrl == null) {
+            throw new IllegalArgumentException("Must pass EXTRA_POST_KEY and 2");
         }
 
         // Initialize Database
@@ -96,14 +102,14 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         // Add value event listener to the post
         // [START post_value_event_listener]
 
-        Glide.with(this).load("https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAm-AAAAJDg0M2YwYWI3LTM5YWItNGEwMi1hNTg1LTZkNzFkM2U5ZWE0NA.jpg")
+        Glide.with(this).load(mPostAuthorPhotoUrl)
                 .crossFade()
                 .thumbnail(0.5f)
                 .bitmapTransform(new CircleTransform(this))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(mImageView);
-
-
+//        mUser.child("users").child(model.uid);
+//        Query myTopPostsQuery = mUserReference.child("users").child(mPostKey);
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -190,12 +196,14 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
         public TextView authorView;
         public TextView bodyView;
+        public TextView timeStampView;
 
         public CommentViewHolder(View itemView) {
             super(itemView);
 
             authorView = (TextView) itemView.findViewById(R.id.comment_author);
             bodyView = (TextView) itemView.findViewById(R.id.comment_body);
+            timeStampView = (TextView) itemView.findViewById(R.id.timestamp);
         }
     }
 
@@ -314,6 +322,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
             Comment comment = mComments.get(position);
             holder.authorView.setText(comment.author);
             holder.bodyView.setText(comment.text);
+            holder.timeStampView.setText(comment.date);
         }
 
         @Override

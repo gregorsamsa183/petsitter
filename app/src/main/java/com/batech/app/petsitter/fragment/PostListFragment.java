@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
@@ -17,11 +18,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.batech.app.petsitter.model.User;
+import com.batech.app.petsitter.other.CircleTransform;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +41,7 @@ import com.batech.app.petsitter.model.Post;
 import com.batech.app.petsitter.viewholder.PostViewHolder;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.firebase.database.ValueEventListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -54,6 +61,8 @@ public abstract class PostListFragment extends Fragment {
 
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
+
+    String post_author_photo_url;
 
     public PostListFragment() {}
 
@@ -109,7 +118,7 @@ public abstract class PostListFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // [END create_database_reference]
 
-        mRecycler = (RecyclerView) rootView.findViewById(R.id.messages_list);
+        mRecycler = (RecyclerView) rootView.findViewById(R.id.posts_list);
         mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
         mProgressBar .getIndeterminateDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.MULTIPLY);
         mRecycler.setHasFixedSize(true);
@@ -136,6 +145,27 @@ public abstract class PostListFragment extends Fragment {
             @Override
             protected void populateViewHolder(final PostViewHolder viewHolder, final Post model, final int position) {
                 final DatabaseReference postRef = getRef(position);
+                DatabaseReference mUser = FirebaseDatabase.getInstance().getReference();
+
+                Query myTopPostsQuery = mUser.child("users").child(model.uid);
+                myTopPostsQuery.addValueEventListener (new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        post_author_photo_url = user.getPhotoUri();
+                        Glide.with(getActivity()).load(post_author_photo_url)
+                                .crossFade()
+                                .thumbnail(0.5f)
+                                .bitmapTransform(new CircleTransform(getActivity()))
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(viewHolder.authorPhotoView);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
                 // Set click listener for the whole post view
                 final String postKey = postRef.getKey();
@@ -145,6 +175,8 @@ public abstract class PostListFragment extends Fragment {
                         // Launch PostDetailActivity
                         Intent intent = new Intent(getActivity(), PostDetailActivity.class);
                         intent.putExtra(PostDetailActivity.EXTRA_POST_KEY, postKey);
+                        intent.putExtra(PostDetailActivity.EXTRA_POST_KEY_2, post_author_photo_url);
+
                         startActivity(intent);
                     }
                 });

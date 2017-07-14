@@ -90,7 +90,7 @@ public class RegisterActivity extends Activity {
         String userid = userId;
         String email = emailAddress;
 
-        User user = new User(email, username, name, surname, "", Uri.parse("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYB1orHNGOOl3nWC9O4xKkiNjrnkjFHEoGbp5z9pQVsKLjzP8J"));
+        User user = new User(email, username, name, surname, "", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYB1orHNGOOl3nWC9O4xKkiNjrnkjFHEoGbp5z9pQVsKLjzP8J");
         //		String username, String email, String name, String surname, String fullname, Uri uri
 
         Map<String, Object> userValues = user.toMap();

@@ -25,9 +25,8 @@ import com.batech.app.petsitter.R;
 import com.batech.app.petsitter.fragment.AllPostsFragment;
 import com.batech.app.petsitter.fragment.HomeFragment;
 import com.batech.app.petsitter.fragment.MyPostsFragment;
-import com.batech.app.petsitter.fragment.NotificationsFragment;
+import com.batech.app.petsitter.fragment.NewPostFragment;
 import com.batech.app.petsitter.fragment.MessagesFragment;
-import com.batech.app.petsitter.fragment.ProfileFragment;
 import com.batech.app.petsitter.fragment.SettingsFragment;
 import com.batech.app.petsitter.model.User;
 import com.batech.app.petsitter.other.CircleTransform;
@@ -70,7 +69,7 @@ public class MainActivity extends BaseActivity {
     private static final String TAG_HOME = "home";
     private static final String TAG_MESSAGES = "messages";
     private static final String TAG_PROFILE = "profile";
-    private static final String TAG_NOTIFICATIONS = "notifications";
+    private static final String TAG_NEWPOST = "newpost";
     private static final String TAG_SETTINGS = "settings";
 
     FirebaseUser user;
@@ -225,8 +224,8 @@ public class MainActivity extends BaseActivity {
                 // update the main content by replacing fragments
                 Fragment fragment = getHomeFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
+                fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,
+                        android.R.anim.slide_out_right);
                 fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
                 fragmentTransaction.commitAllowingStateLoss();
             }
@@ -266,8 +265,8 @@ public class MainActivity extends BaseActivity {
                 return messagesFragment;
             case 3:
                 // notifications fragment
-                NotificationsFragment notificationsFragment = new NotificationsFragment();
-                return notificationsFragment;
+                 NewPostFragment newPostFragment = new NewPostFragment();
+                return newPostFragment;
             case 4:
                 // settings fragment
                 SettingsFragment settingsFragment = new SettingsFragment();
@@ -308,13 +307,12 @@ public class MainActivity extends BaseActivity {
                         navItemIndex = 2;
                         CURRENT_TAG = TAG_MESSAGES;
                         break;
-                    case R.id.nav_notifications:
+                    case R.id.nav_newpost:
                         navItemIndex = 3;
-                      startActivity(new Intent(MainActivity.this, NewPostActivity.class));
-                      return true;
-//                    CURRENT_TAG = TAG_NOTIFICATIONS;
-  //                    break;
-
+//                      startActivity(new Intent(MainActivity.this, NewPostActivity.class));
+//                      return true;
+                        CURRENT_TAG = TAG_NEWPOST;
+                        break;
                     case R.id.nav_settings:
                         navItemIndex = 4;
                         CURRENT_TAG = TAG_SETTINGS;
