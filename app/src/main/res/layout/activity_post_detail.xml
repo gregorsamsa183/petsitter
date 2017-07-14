@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#ffffff"
     tools:context="com.batech.app.petsitter.activity.PostDetailActivity">
 
     <include
@@ -24,15 +25,19 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/post_author_layout"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="5dp" />
+
+    <View style="@style/Divider"
+        android:id="@+id/divider2"
+        android:layout_below="@+id/post_text_layout" />
 
     <LinearLayout
         android:id="@+id/comment_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/post_text_layout"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/divider2"
+        android:layout_marginTop="5dp"
         android:weightSum="1.0">
 
         <EditText
@@ -53,11 +58,18 @@
 
     </LinearLayout>
 
+    <View style="@style/Divider"
+        android:layout_below="@+id/comment_form"
+        android:id="@+id/divider1"
+        />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_comments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/comment_form"
-        tools:listitem="@layout/item_comment" />
+        android:layout_below="@+id/divider1"
+        tools:listitem="@layout/item_comment"
+        android:layout_marginTop="5dp"
+        />
 
 </RelativeLayout>

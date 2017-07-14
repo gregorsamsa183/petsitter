@@ -10,7 +10,7 @@
     <string name="nav_home">Ana Sayfa</string>
     <string name="nav_profile">Gönderilerim</string>
     <string name="nav_messages">Mesajlar</string>
-    <string name="nav_notifications">Bildirimler</string>
+    <string name="nav_newpost">Yeni Paylaşım</string>
     <string name="nav_settings">Ayarlar</string>
     <string name="nav_about_us">Hakkımızda</string>
 
@@ -19,7 +19,7 @@
         <item>Ana Sayfa</item>
         <item>Profilim</item>
         <item>Mesajlar</item>
-        <item>Bildirimler</item>
+        <item>Yeni Gönderi</item>
         <item>Ayarlar</item>
     </string-array>
 

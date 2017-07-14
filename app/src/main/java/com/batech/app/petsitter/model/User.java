@@ -17,7 +17,7 @@ public class User {
     public String name;
     public String surname;
     public String fullname;
-    public Uri uri;
+    public String photoUri;
     public String userid;
 
     public User() {
@@ -31,13 +31,13 @@ public class User {
         this.surname = surname;
         this.fullname= fullname;
     }
-    public User(String username, String email, String name, String surname, String fullname, Uri uri) {
+    public User(String username, String email, String name, String surname, String fullname, String photoUri) {
         this.username = username;
         this.email = email;
         this.name = name;
         this.surname = surname;
         this.fullname= fullname;
-        this.uri = uri;
+        this.photoUri = photoUri;
     }
 
     public String getName() {
@@ -60,9 +60,9 @@ public class User {
 
     public String getFullname() { return fullname; }
 
-    public Uri getUri() { return uri; }
+    public String getPhotoUri() { return photoUri; }
 
-    public void setUri(Uri uri) { this.uri = uri; }
+    public void setPhotoUri(String photoUri) { this.photoUri = photoUri; }
 
     public String getUserid() { return userid; }
 
@@ -79,7 +79,7 @@ public class User {
         result.put("username", username);
         result.put("fullname", fullname);
         result.put("email", email);
-        result.put("photoUri", uri.toString());
+        result.put("photoUri", photoUri);
         return result;
     }
 

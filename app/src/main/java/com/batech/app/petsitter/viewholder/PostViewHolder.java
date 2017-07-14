@@ -12,6 +12,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
 
     public TextView titleView;
     public TextView authorView;
+    public ImageView authorPhotoView;
     public ImageView starView;
     public TextView numStarsView;
     public TextView bodyView;
@@ -21,6 +22,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
 
         titleView = (TextView) itemView.findViewById(R.id.post_title);
         authorView = (TextView) itemView.findViewById(R.id.post_author);
+        authorPhotoView = (ImageView) itemView.findViewById(R.id.post_author_photo);
         starView = (ImageView) itemView.findViewById(R.id.star);
         numStarsView = (TextView) itemView.findViewById(R.id.post_num_stars);
         bodyView = (TextView) itemView.findViewById(R.id.post_body);

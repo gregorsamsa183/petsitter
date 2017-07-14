@@ -266,7 +266,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
 		String displayName = acct.getDisplayName();
 		String familyName = acct.getFamilyName();
 		String givenName = acct.getGivenName();
-		Uri photoUrl = acct.getPhotoUrl();
+		String photoUrl = acct.getPhotoUrl().toString();
 
 		User user = new User(email, email, givenName, familyName, displayName, photoUrl);
 		//		String username, String email, String name, String surname, String fullname, Uri uri

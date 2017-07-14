@@ -4,6 +4,7 @@ import com.batech.app.petsitter.R;
 import com.batech.app.petsitter.other.JsonParser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.apache.http.NameValuePair;
 import org.json.JSONObject;
@@ -24,6 +25,8 @@ public class SplashScreen extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
+
+		FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
 		/*
 		 * Showing splashscreen while making network calls to download necessary

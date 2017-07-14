@@ -47,16 +47,6 @@
             android:label="Post Detail">
         </activity>
         <activity
-            android:name=".activity.NewPostActivity"
-            android:parentActivityName=".activity.MainActivity"
-            android:label="New Post">
-        </activity>
-        <activity
-            android:name=".activity.ProfileActivity"
-            android:parentActivityName=".activity.MainActivity"
-            android:label="Profile">
-        </activity>
-        <activity
             android:name=".activity.SettingActivity"
             android:parentActivityName=".activity.MainActivity"
             android:label="Setting"

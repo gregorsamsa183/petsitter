@@ -12,7 +12,6 @@ public class Post {
 
     public String uid;
     public String author;
-    public String nameSurname;
     public String title;
     public String body;
     public int starCount = 0;
